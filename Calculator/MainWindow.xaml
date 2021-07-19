@@ -1,0 +1,225 @@
+﻿<Window x:Class="Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Calculator"
+        mc:Ignorable="d"
+        Icon = "C:\WPF\Calculator\bin\Debug\Calculator_30001.ico"
+        Title="Calculator" Height="470" Width="410">
+    <Window.Resources>
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <Style x:Key="TextBoxStyle1" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="FocusVisual">
+            <Setter Property="Control.Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Rectangle Margin="2" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD"/>
+        <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#4F4B58"/>
+        <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#4F4B58"/>
+        <SolidColorBrush x:Key="Button.Pressed.Background" Color="#4F4B58"/>
+        <SolidColorBrush x:Key="Button.Pressed.Border" Color="#4F4B58"/>
+        <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4"/>
+        <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5"/>
+        <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383"/>
+        <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="ButtonStyle2" TargetType="{x:Type Button}">
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
+            <Setter Property="Background" Value="{StaticResource Button.Static.Background}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="1"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="border" CornerRadius="15" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="true">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsDefaulted" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.MouseOver.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="true">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Pressed.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Pressed.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="border" Value="{StaticResource Button.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource Button.Disabled.Border}"/>
+                                <Setter Property="TextElement.Foreground" TargetName="contentPresenter" Value="{StaticResource Button.Disabled.Foreground}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Background="#99ABA1">
+        <TextBox x:Name="textBox1" Margin="25,40,27,344" Background="#D9D9D9" Style="{DynamicResource TextBoxStyle1}" FontFamily="Actor" FontSize="20" VerticalContentAlignment="Center"/>
+        <Button x:Name="CE" Width="71" Height="33" Margin="33,116,288,280" Background="#4F4F4F" Cursor="Hand"
+                Content="C" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="CE_Click"></Button>
+        <Button x:Name="C" Width="71" Height="33" Margin="105,107,190,271" Background="#4F4F4F" Cursor="Hand"
+                Content="!" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="C_Click"></Button>
+        <Button x:Name="toSquare" Width="71" Height="33" Margin="190,107,105,271" Background="#4F4F4F" Cursor="Hand"
+                Content="x²" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="toSquare_Click"></Button>
+        <Button x:Name="toTheExtent" Width="71" Height="33" Margin="274,107,21,271" Background="#4F4F4F" Cursor="Hand"
+                Content="xª" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="toTheExtent_Click"></Button>
+        <Button x:Name="fraction" Width="71" Height="33" Margin="20,155,275,223" Background="#4F4F4F" Cursor="Hand"
+                Content="1/x" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="fraction_Click"></Button>
+        <Button x:Name="percent" Width="71" Height="33" Margin="105,155,190,223" Background="#4F4F4F" Cursor="Hand"
+                Content="%" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="percent_Click"></Button>
+        <Button x:Name="root" Width="71" Height="33" Margin="190,155,105,223" Background="#4F4F4F" Cursor="Hand"
+                Content="√" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="root_Click"></Button>
+        <Button x:Name="division" Width="71" Height="33" Margin="274,155,21,223" Background="#4F4F4F" Cursor="Hand"
+                Content="/" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="division_Click"></Button>
+        <Button x:Name="multiply" Width="71" Height="33" Margin="274,205,21,173" Background="#4F4F4F" Cursor="Hand"
+                Content="*" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="multiply_Click"></Button>
+        <Button x:Name="subtrsction" Width="71" Height="33" Margin="274,255,21,123" Background="#4F4F4F" Cursor="Hand"
+                Content="-" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="subtrsction_Click"></Button>
+        <Button x:Name="add" Width="71" Height="33" Margin="274,305,21,73" Background="#4F4F4F" Cursor="Hand"
+                Content="+" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="Add_Click"></Button>
+        <Button x:Name="button7" Width="71" Height="33" Margin="20,205,275,173" Background="#382E4E" Cursor="Hand"
+                Content="7" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button7_Click"></Button>
+        <Button x:Name="button8" Width="71" Height="33" Margin="105,205,190,173" Background="#382E4E" Cursor="Hand"
+                Content="8" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button8_Click"></Button>
+        <Button x:Name="button9" Width="71" Height="33" Margin="190,205,105,173" Background="#382E4E" Cursor="Hand"
+                Content="9" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button9_Click"></Button>
+        <Button x:Name="button4" Width="71" Height="33" Margin="20,255,275,123" Background="#382E4E" Cursor="Hand"
+                Content="4" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button4_Click"></Button>
+        <Button x:Name="button5" Width="71" Height="33" Margin="105,255,190,123" Background="#382E4E" Cursor="Hand"
+                Content="5" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button5_Click"></Button>
+        <Button x:Name="button6" Width="71" Height="33" Margin="190,255,105,123" Background="#382E4E" Cursor="Hand"
+                Content="6" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button6_Click"></Button>
+        <Button x:Name="button1" Width="71" Height="33" Margin="20,305,275,73" Background="#382E4E" Cursor="Hand"
+                Content="1" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button1_Click"></Button>
+        <Button x:Name="button2" Width="71" Height="33" Margin="105,305,190,73" Background="#382E4E" Cursor="Hand"
+                Content="2" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button2_Click"></Button>
+        <Button x:Name="button3" Width="71" Height="33" Margin="190,305,105,73" Background="#382E4E" Cursor="Hand"
+                Content="3" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button3_Click"></Button>
+        <Button x:Name="button0" Width="71" Height="33" Margin="105,352,190,26" Background="#382E4E" Cursor="Hand"
+                Content="0" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="button0_Click"></Button>
+        <Button x:Name="coma" Width="71" Height="33" Margin="190,352,105,26" Background="#382E4E" Cursor="Hand"
+                Content="," FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="coma_Click"></Button>
+        <Button x:Name="backspace" Width="71" Height="33" Margin="20,352,275,26" Background="#4F4F4F" Cursor="Hand"
+                Content="⟵" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle1}" Click="backspace_Click"></Button>
+        <Button x:Name="equal" Width="71" Height="33" Margin="274,352,21,26" Background="#120D1E" Cursor="Hand"
+                Content="=" FontFamily="Actor" FontSize="18" Foreground="#F1D0B1"
+                Style="{DynamicResource ButtonStyle2}" Click="equal_Click"></Button>
+
+    </Grid>
+</Window>
